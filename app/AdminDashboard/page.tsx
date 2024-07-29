@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import Sidebar from "./Sidebar";
 import NavbarUser from "../Components/NavbarUser";
 import Navbar from "../Components/Navbar";
@@ -7,28 +8,24 @@ import AddNurse from "./AddNurse";
 import AllDoctors from "./AllDoctors";
 import AllNurses from "./AllNusrses";
 import AllPatients from "./AllPatients";
-import { useState } from "react";
 import Footer from "../Components/Footer";
 
 export default function Page() {
-
-  const user = localStorage.getItem("User") as string;
-    const userObj = JSON.parse(user);
-    if (!(userObj) || (userObj.role != 'admin')) {
-      window.location.href = '/'; 
-      return null;
-    }
-  let NavbarComponent = Navbar;
-  if (userObj) {
-    NavbarComponent = NavbarUser;
-  }
-  else{
-    NavbarComponent = Navbar;
-  }
-  
-
-
+  const [userObj, setUserObj] = useState(null);
   const [activeComponent, setActiveComponent] = useState('Doctors');
+
+  useEffect(() => {
+    const user = localStorage.getItem("User") as string;
+    if (user) {
+      const parsedUser = JSON.parse(user);
+      setUserObj(parsedUser);
+      if (!parsedUser || parsedUser.role !== 'admin') {
+        window.location.href = '/';
+      }
+    } else {
+      window.location.href = '/';
+    }
+  }, []);
 
   const handleSidebarOptionClick = (option: string) => {
     setActiveComponent(option);
@@ -51,14 +48,17 @@ export default function Page() {
     }
   };
 
+  if (!userObj) {
+    return null;
+  }
+
   return (
     <>
       <div className="bg-[#669bbc] min-h-screen ">
-        {/* <NavbarComponent /> */}
         <NavbarUser />
         <div className="flex flex-col items-center md:flex-row md:justify-between">
-        <Sidebar onOptionClick={handleSidebarOptionClick} />   
-        {renderComponent()}
+          <Sidebar onOptionClick={handleSidebarOptionClick} />
+          {renderComponent()}
         </div>
       </div>
       <Footer />
