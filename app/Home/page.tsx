@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useState } from 'react';
 import Home from "./Home";
 import NavbarUser from "../Components/NavbarUser";
 import Navbar from "../Components/Navbar";
@@ -9,15 +10,20 @@ import BestDoctors from "./BestDoctors";
 import "../Components/Components.css";
 
 export default function Page() {
-  const user = localStorage.getItem("User") as string;
-  const userObj = JSON.parse(user);
-  let NavbarComponent = Navbar;
-  if (userObj) {
-    NavbarComponent = NavbarUser;
-  }
-  else{
-    NavbarComponent = Navbar;
-  }
+  const [NavbarComponent, setNavbarComponent] = useState(() => Navbar); // Default to Navbar
+
+  useEffect(() => {
+    // Ensure localStorage is accessed only on the client side
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("User");
+      if (user) {
+        const userObj = JSON.parse(user);
+        if (userObj) {
+          setNavbarComponent(() => NavbarUser); // Use NavbarUser if user exists
+        }
+      }
+    }
+  }, []); // Empty dependency array means this runs once on component mount
 
   const feedbacks = [
     {

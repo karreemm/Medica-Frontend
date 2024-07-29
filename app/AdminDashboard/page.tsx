@@ -15,15 +15,18 @@ export default function Page() {
   const [activeComponent, setActiveComponent] = useState('Doctors');
 
   useEffect(() => {
-    const user = localStorage.getItem("User") as string;
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      setUserObj(parsedUser);
-      if (!parsedUser || parsedUser.role !== 'admin') {
+    // Ensure code runs only on the client side
+    if (typeof window !== "undefined") {
+      const user = localStorage.getItem("User");
+      if (user) {
+        const parsedUser = JSON.parse(user);
+        setUserObj(parsedUser);
+        if (!parsedUser || parsedUser.role !== 'admin') {
+          window.location.href = '/';
+        }
+      } else {
         window.location.href = '/';
       }
-    } else {
-      window.location.href = '/';
     }
   }, []);
 
@@ -48,7 +51,7 @@ export default function Page() {
     }
   };
 
-  if (!userObj) {
+  if (userObj === null) {
     return null;
   }
 

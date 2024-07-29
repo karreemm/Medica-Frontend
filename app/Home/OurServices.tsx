@@ -7,10 +7,6 @@ import img1 from "../Components/Images/appointment.jpg"
 import img2 from "../Components/Images/diagnosis.jpg"
 import img3 from "../Components/Images/surgery.jpg"
 
-
-
-
-
 export default function OurServices() {
 
 

@@ -22,13 +22,30 @@ import HandleDoctorCV from "./Handling/HandleDoctorCV";
 export default function Editprofile() {
 
     // User Data
-    const user = localStorage.getItem("User") as string;
-    const userObj = JSON.parse(user);
-    const userRole = userObj.role;
-    console.log("user,", userObj);
+    const [role, setRole] = useState('');
+    const [id, setId] = useState('');
+    const [userObj, setUserObj] = useState<any | null>(null);
 
     useEffect(() => {
-    GetPatientHistory(userObj.uid)
+        // Check if we are in a browser environment
+        if (typeof window !== "undefined") {
+            const user = localStorage.getItem("User");
+            if (user) {
+                const parsedUser = JSON.parse(user);
+                setUserObj(parsedUser);
+
+                if (parsedUser) {
+                    setRole(parsedUser.role);
+                    setId(parsedUser.uid);
+                  }
+            }
+        }
+    }, []);
+
+    console.log("user,", id);
+
+    useEffect(() => {
+    GetPatientHistory(id)
   .then(data => {
     try {
       console.log("Patient History Data", data);
@@ -45,7 +62,7 @@ export default function Editprofile() {
 }, []);
 
     useEffect(() => {
-    GetDoctorCV(userObj.uid)
+    GetDoctorCV(id)
     .then(data => {
         try{
             console.log("Doctor CV Data", data);
@@ -301,10 +318,10 @@ export default function Editprofile() {
                 }
             };
 
-        if (userRole === 'patient') {
+        if (role === 'patient') {
             updateProfileAndHistory();
         }
-        if (userRole === 'doctor') {
+        if (role === 'doctor') {
             updateDoctorCV();
         }
 
@@ -530,7 +547,7 @@ export default function Editprofile() {
                 </div>
 
                 {/* Patient History */}
-                {userRole === 'patient' &&
+                {role === 'patient' &&
                     <div className="bg-gradient-to-r from-sky-900 to-indigo-900 bg-opacity-2 p-8 rounded-lg shadow-lg w-[380px] md:w-[100%] flex flex-col items-center">
                     <h2 className="text-left w-full text-[#f2d7bc] text-2xl pacifico-font"> Illness History  </h2>
 
@@ -638,7 +655,7 @@ export default function Editprofile() {
                 }
 
                  {/* Doctor Cv */}
-                 {userRole === 'doctor' &&
+                 {role === 'doctor' &&
                     <div className="bg-gradient-to-r from-sky-900 to-indigo-900 bg-opacity-2 p-8 rounded-lg shadow-lg w-[380px] md:w-[100%] flex flex-col items-center">
                     <h2 className="text-left w-full text-[#f2d7bc] text-2xl pacifico-font"> Doctor CV  </h2>
 

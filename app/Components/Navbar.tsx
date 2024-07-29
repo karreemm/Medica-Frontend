@@ -7,8 +7,6 @@ import { faHouse, faCircleInfo, faHandshake } from '@fortawesome/free-solid-svg-
 import './Components.css';
 import Link from 'next/link';
 
-
-
 const Navbar = () => {
   // State to manage the navbar's visibility
   const [nav, setNav] = useState(false);

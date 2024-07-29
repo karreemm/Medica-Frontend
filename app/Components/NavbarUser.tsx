@@ -23,14 +23,30 @@ const NavbarUser = () => {
   const [certification, setCertification] = useState('');
   const [privateclinical, setPrivateClinical] = useState('');
 
+  const [role, setRole] = useState('');
+  const [id, setId] = useState('');
+  const [userObj, setUserObj] = useState<any | null>(null);
 
-  const user = localStorage.getItem("User") as string;
-  const userObj = JSON.parse(user);
-  let role = userObj.role;
-  console.log("id from Navbar:", userObj.uid);
+    useEffect(() => {
+        // Check if we are in a browser environment
+        if (typeof window !== "undefined") {
+            const user = localStorage.getItem("User");
+            if (user) {
+                const parsedUser = JSON.parse(user);
+                setUserObj(parsedUser);
+
+                if (parsedUser) {
+                    setRole(parsedUser.role);
+                    setId(parsedUser.uid);
+                  }
+            }
+        }
+    }, []);
+
+  console.log("id from Navbar:", id);
 
   useEffect(() => {
-  GetPatientHistory(userObj.uid)
+  GetPatientHistory(id)
   .then(data => {
     try {
       console.log("Patient History Data from Navbar", data);
@@ -44,10 +60,10 @@ const NavbarUser = () => {
   .catch(error => {
     console.log("Error in fetching Patient History Data:", error);
   });
-  }, [userObj.id]);
+  }, [id]);
 
   useEffect(() => {
-    GetDoctorCV(userObj.uid)
+    GetDoctorCV(id)
     .then(data => {
         try{
             console.log("Doctor CV Data", data);
@@ -64,9 +80,6 @@ const NavbarUser = () => {
         console.log("Error in fetching Doctor CV Data:", error);
     })
     },[]);
-
-
-
 
   // State to manage the navbar's visibility
   const [nav, setNav] = useState(false);
