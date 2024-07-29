@@ -30,7 +30,7 @@ const items = [
     },
     {
       title: 'Core Values',
-      description: `Patient-Centered Care: Putting our patients' needs first in everything we do.
+      description: `Patient-Centered Care: Putting our patients needs first in everything we do.
       Compassion: Showing empathy and kindness to all individuals.
       Excellence: Pursuing the highest standards of quality and performance.
       Collaboration: Working together as a team to achieve common goals.
