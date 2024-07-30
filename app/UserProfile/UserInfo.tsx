@@ -3,14 +3,15 @@
 import { FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import { faUser, faEnvelope, faPhone, faLocationDot, faWeightScale, faRulerVertical, faJoint, faMaskFace, faChevronDown, faGraduationCap, faAward, faUserDoctor, faHouseChimneyMedical } from '@fortawesome/free-solid-svg-icons';
 import '../Components/Components.css';
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import GetPatientHistory from '../EditprofilePage/Handling/GetPatientHistory';
 import GetDoctorCV from '../EditprofilePage/Handling/GetDoctorCV';
 
 
 
+
 function UserInfo (){
+
 
     const [weight, setWeight] = useState(0.0);
     const [height, setHeight] = useState(0.0);
@@ -23,18 +24,16 @@ function UserInfo (){
     const [specialization, setSpecialization] = useState('');
     const [certification, setCertification] = useState('');
     const [privateclinical, setPrivateClinical] = useState('');
-
-    const [userObj, setUserObj] = useState<any>(null);
+    
+    
+    const user = localStorage.getItem("User") as string;
+    const userObj = JSON.parse(user);
 
     useEffect(() => {
-        const user = localStorage.getItem("User") as string;
-        if (user){
-            const userObj = JSON.parse(user);
-            setUserObj(userObj);
+        if (userObj) {
             setRole(userObj.role);
         }
-    }, []);
-
+    }, [userObj]);
 
     useEffect(() => {
         GetPatientHistory(userObj.uid)
@@ -53,7 +52,7 @@ function UserInfo (){
         .catch(error => {
           console.log("Error in fetching Patient History Data:", error);
         });
-        }, [userObj.id]);
+        }, []);
 
         const GetSelectedDiseases = (diseases: Array<string>) => {
             if (diseases.length === 0) return "None";

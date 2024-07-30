@@ -21,25 +21,26 @@ export default function UserCard() {
     useEffect(() => {
         const user = localStorage.getItem("User") || "";
         const userObj = JSON.parse(user);
+        console.log("userObj from card", userObj);
         if (userObj) {
             setUserObj(userObj);
             setId(userObj.id);
             setRole(userObj.role);
-            setDate(userObj.date);
+            setDate(new Date(userObj.date));
             setAge(userObj.age);
             setFirstname(userObj.firstname);
             setLastname(userObj.lastname);
-            setProfileImage(userObj.profileImage);
+            setProfileImage(userObj.profileimage);
             setBdate(userObj.bdate);
         }
     }, []);
 
-    
     useEffect(() => {
         if (date) {
             const day = date.getDate();
             const month = date.toLocaleString('default', { month: 'short' });
             const year = date.getFullYear();
+            console.log("date" ,`${day} ${month} ${year}`);
             setDataString(`${day} ${month} ${year}`);
         }
     }, [date]);
