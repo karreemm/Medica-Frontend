@@ -35,11 +35,21 @@ export default function UserCard() {
     }, []);
 
     
-    const day = date.getDate();
-    const month = date.toLocaleString('default', { month: 'short' });
-    const year = date.getFullYear();
-    setDataString (`${day} ${month} ${year}`);
-    const age = new Date().getFullYear() - new Date(bdate).getFullYear();
+    useEffect(() => {
+        if (date) {
+            const day = date.getDate();
+            const month = date.toLocaleString('default', { month: 'short' });
+            const year = date.getFullYear();
+            setDataString(`${day} ${month} ${year}`);
+        }
+    }, [date]);
+
+    useEffect(() => {
+        if (bdate) {
+            const age = new Date().getFullYear() - new Date(bdate).getFullYear();
+            setAge(age);
+        }
+    }, [bdate]);
 
     return (
         <>
