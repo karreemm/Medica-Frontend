@@ -7,8 +7,14 @@ import GetAllScans from './getAllScans';
 
 function Scans() {
 
-    const user = localStorage.getItem('User') as string;
-    const userObj= JSON.parse(user);
+    const [userObj, setUserObj] = useState<any>(null);
+    useEffect(() => {
+        const user = localStorage.getItem("User") || "";
+        const userObj = JSON.parse(user);
+        if (userObj) {
+            setUserObj(userObj);
+        }
+    }, []);
     const [requestElements, setRequestElements] = useState();
     useEffect(() => {
         GetAllScans(userObj.uid)

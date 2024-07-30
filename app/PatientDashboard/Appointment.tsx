@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEye,faNotesMedical,faCalendar,faUserNurse} from '@fortawesome/free-solid-svg-icons';
 import {AddScan} from './AddScan';
@@ -24,8 +24,15 @@ function Appointment(req: {Notes:string , apid:number, did: number , name:string
             break;
     }
     const [display , setDisplay] = useState(false);
-    const user = localStorage.getItem('User') as string;
-    const userObj= JSON.parse(user);
+    const [userObj, setUserObj] = useState<any>(null);
+    useEffect(() => {
+        const user = localStorage.getItem('User') as string;
+        const userObj= JSON.parse(user);
+        if (userObj) {
+            setUserObj(userObj);
+        }
+    }, []);
+
 
     const handleViewDoctor = (uid: string) => {
         router.push(`/ViewUserProfile?uid=${uid}&role=doctor`);

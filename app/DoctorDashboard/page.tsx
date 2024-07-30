@@ -19,7 +19,7 @@ export default function Page() {
       if (user) {
         const parsedUser = JSON.parse(user);
         setUserObj(parsedUser);
-        if (!parsedUser || parsedUser.role !== "nurse") {
+        if (!parsedUser || parsedUser.role !== "doctor") {
           window.location.href = "/login";
         }
       } else {

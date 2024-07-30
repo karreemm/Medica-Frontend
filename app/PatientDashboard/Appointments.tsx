@@ -7,8 +7,14 @@ import { useEffect, useState } from "react";
 import GetAllAppointments from "./GetAllAppointments";
 function Appointments() {
 
-    const user = localStorage.getItem('User') as string;
-    const userObj= JSON.parse(user);
+    const [userObj, setUserObj] = useState<any>(null);
+    useEffect(() => {
+        const user = localStorage.getItem("User") as string;
+        const userObj = JSON.parse(user);
+        if (userObj) {
+            setUserObj(userObj);
+        }
+    }, []);
     const [requestElements, setRequestElements] = useState<JSX.Element[]>([]);
     useEffect(()=>{
         GetAllAppointments(userObj.uid)

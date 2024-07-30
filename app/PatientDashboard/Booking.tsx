@@ -63,8 +63,14 @@ function Booking() {
         setFilteredDoctors(doctors);
       }
     };
-    const user = localStorage.getItem('User') as string;
-    const userObj= JSON.parse(user);
+    const [userObj, setUserObj] = useState<any>(null);
+    useEffect(() => {
+        const user = localStorage.getItem("User") as string;
+        const userObj = JSON.parse(user);
+        if (userObj) {
+            setUserObj(userObj);
+        }
+    }, []);
     console.log(filteredDoctors)
     const requestElements = filteredDoctors.map((doc, index) => (
         <Doctor

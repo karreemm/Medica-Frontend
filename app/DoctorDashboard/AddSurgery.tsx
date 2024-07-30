@@ -11,8 +11,14 @@ import GetNurses from './GetNurses';
 import AddNursesToSurgery from './AddNursesToSurgery';
 import { handelStatus } from './UpdateStatus';
 export function AddSurgery(req: {apid:number, id: number , name:string , image : string ,date : string}){
-    const user = localStorage.getItem("User") as string;
-    const userObj = JSON.parse(user);
+    const [userObj, setUserObj] = useState<any>(null);
+    useEffect(() => {
+        const user = localStorage.getItem("User") || "";
+        const userObj = JSON.parse(user);
+        if (userObj) {
+            setUserObj(userObj);
+        }
+    }, []);
     const [nurses, setNurses] = useState();
     const [selectedNurses, setSelectedNurses] = useState<any[]>([]);
     const [sid, setSid] = useState(0);

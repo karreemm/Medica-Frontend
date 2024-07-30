@@ -4,7 +4,6 @@ import { faPaperPlane } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import "react-datetime/css/react-datetime.css"
 import 'react-datetime/css/react-datetime.css';
-import 'tailwindcss/tailwind.css'; // Ensure Tailwind CSS is imported
 import handelAddScan from './handelAddScan';
 import {useRouter} from 'next/navigation';
 
