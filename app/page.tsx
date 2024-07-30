@@ -1,23 +1,16 @@
 "use client";
-import Navbar from "./Components/Navbar";
-import NavbarUser from "./Components/NavbarUser";
-import Home from "./Home/Home";
+import dynamic from 'next/dynamic';
 import Services from "./Home/OurServices";
+import Home from "./Home/Home";
 import { CustomerFeedbacks } from "./Home/CustomerFeedbacks";
 import Footer from "./Components/Footer";
 import BestDoctors from "./Home/BestDoctors";
+import "./Components/Components.css";
 
-export default function Page() {
-  const user = localStorage.getItem("User") as string;
-  const userObj = JSON.parse(user);
-  let NavbarComponent = Navbar;
-  if (userObj) {
-    NavbarComponent = NavbarUser;
-  }
-  else{
-    NavbarComponent = Navbar;
-  }
+// Dynamically import the ClientNavbar component with SSR disabled
+const DynamicClientNavbar = dynamic(() => import('./Home/ClientNavbar'), { ssr: false });
 
+const Page: React.FC = () => {
   const feedbacks = [
     {
       quote:
@@ -52,22 +45,22 @@ export default function Page() {
   ];
 
   return (
-    <>
-      <main className="h-screen w-full bg-[#669bbc]">
-        <NavbarComponent />
-        <div className="mt-24 space-y-10 md:space-y-20 ">
-          <Home />
-          <Services />
-          <BestDoctors />
-          <CustomerFeedbacks
-            items={feedbacks}
-            direction="left"
-            speed="slow"
-            pauseOnHover={true}
-          />
-          <Footer />
-        </div>
-      </main>
-    </>
+    <main className="min-h-screen w-full bg-[#669bbc]">
+      <DynamicClientNavbar />
+      <div className="mt-24 space-y-10 md:space-y-20">
+        <Home />
+        <Services />
+        <BestDoctors />
+        <CustomerFeedbacks
+          items={feedbacks}
+          direction="left"
+          speed="slow"
+          pauseOnHover={true}
+        />
+        <Footer />
+      </div>
+    </main>
   );
 }
+
+export default Page;

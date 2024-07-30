@@ -1,30 +1,16 @@
 "use client";
-import { useEffect, useState } from 'react';
-import Home from "./Home";
-import NavbarUser from "../Components/NavbarUser";
-import Navbar from "../Components/Navbar";
+import dynamic from 'next/dynamic';
 import Services from "./OurServices";
+import Home from "./Home";
 import { CustomerFeedbacks } from "../Home/CustomerFeedbacks";
 import Footer from "../Components/Footer";
 import BestDoctors from "./BestDoctors";
 import "../Components/Components.css";
 
-export default function Page() {
-  const [NavbarComponent, setNavbarComponent] = useState(() => Navbar); // Default to Navbar
+// Dynamically import the ClientNavbar component with SSR disabled
+const DynamicClientNavbar = dynamic(() => import('./ClientNavbar'), { ssr: false });
 
-  useEffect(() => {
-    // Ensure localStorage is accessed only on the client side
-    if (typeof window !== "undefined") {
-      const user = localStorage.getItem("User");
-      if (user) {
-        const userObj = JSON.parse(user);
-        if (userObj) {
-          setNavbarComponent(() => NavbarUser); // Use NavbarUser if user exists
-        }
-      }
-    }
-  }, []); // Empty dependency array means this runs once on component mount
-
+const Page: React.FC = () => {
   const feedbacks = [
     {
       quote:
@@ -59,22 +45,22 @@ export default function Page() {
   ];
 
   return (
-    <>
-      <main className="min-h-screen w-full bg-[#669bbc]">
-        <NavbarComponent />
-        <div className="mt-24 space-y-10 md:space-y-20 ">
-          <Home />
-          <Services />
-          <BestDoctors />
-          <CustomerFeedbacks
-            items={feedbacks}
-            direction="left"
-            speed="slow"
-            pauseOnHover={true}
-          />
-          <Footer />
-        </div>
-      </main>
-    </>
+    <main className="min-h-screen w-full bg-[#669bbc]">
+      <DynamicClientNavbar />
+      <div className="mt-24 space-y-10 md:space-y-20">
+        <Home />
+        <Services />
+        <BestDoctors />
+        <CustomerFeedbacks
+          items={feedbacks}
+          direction="left"
+          speed="slow"
+          pauseOnHover={true}
+        />
+        <Footer />
+      </div>
+    </main>
   );
 }
+
+export default Page;
