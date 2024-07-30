@@ -14,70 +14,69 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 export default function BestDoctors() {
-
-
     const [currentIndex, setCurrentIndex] = useState(0);
-    const [doctorsPerPage, setDoctorsPerPage] = useState(window.innerWidth < 768 ? 1 : 4);
+    const [doctorsPerPage, setDoctorsPerPage] = useState(4);
 
-    const image1url = image1.src;
-    const image2url = image2.src;
-    const image3url = image3.src;
-    const image4url = image4.src;
-    const image5url = image5.src;
-    const image6url = image6.src;
-    const image7url = image7.src;
-    const image8url = image8.src;
-
+    const imageUrls = [
+        image1.src,
+        image2.src,
+        image3.src,
+        image4.src,
+        image5.src,
+        image6.src,
+        image7.src,
+        image8.src
+    ];
 
     const surgeryDepartment = {
         doctor1: {
             name: "Dr. Ahmed Hassan",
             position: "Chief Surgeon",
-            image: image1url
+            image: imageUrls[0]
         },
         doctor2: {
             name: "Dr. Ibrahim El-Sayed",
             position: "Neurosurgeon",
-            image: image2url
+            image: imageUrls[1]
         },
         doctor3: {
             name: "Dr. Youssef Ahmed",
             position: "Pediatric Surgeon",
-            image: image3url
+            image: imageUrls[2]
         },
         doctor4: {
             name: "Dr. Hala Hassan",
             position: "Vascular Surgeon",
-            image: image4url
+            image: imageUrls[3]
         },
         doctor5: {
             name: "Dr. Rana Khaled",
             position: "Cardiothoracic Surgeon",
-            image: image5url
+            image: imageUrls[4]
         },
         doctor6: {
             name: "Dr. Omar Nabil",
             position: "Orthopedic Surgeon",
-            image: image6url
+            image: imageUrls[5]
         },
         doctor7: {
             name: "Dr. Layla Mahmoud",
             position: "General Surgeon",
-            image: image7url
+            image: imageUrls[6]
         },
         doctor8: {
             name: "Dr. Fatima Saeed",
             position: "Plastic Surgeon",
-            image: image8url
+            image: imageUrls[7]
         }
     };
     
-      const doctorsArray = Object.values(surgeryDepartment);
+    const doctorsArray = Object.values(surgeryDepartment);
 
-      const next = () => {
+    const next = () => {
         setCurrentIndex((prevIndex) => {
-            const maxIndex = doctorsArray.length - 1;
-            if (prevIndex < maxIndex && doctorsArray[prevIndex + 1] != null) {
+            const maxIndex = doctorsArray.length - doctorsPerPage;
+            if (prevIndex < maxIndex) {
                 return prevIndex + 1;
             } else {
                 return prevIndex;
@@ -94,12 +93,15 @@ export default function BestDoctors() {
             setDoctorsPerPage(window.innerWidth < 768 ? 1 : 4);
         };
 
+        // Set initial value for doctorsPerPage
+        handleResize();
+
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);
 
     return (
-        <><div className='flex flex-col space-y-4'>
+        <div className='flex flex-col space-y-4'>
             <h1 className="text-4xl md:text-6xl font-bold text-[#14213d] text-center">Best Doctors</h1>
             <div className="flex justify-center w-full bg-white">
                 <div>
@@ -132,7 +134,5 @@ export default function BestDoctors() {
                 </div>
             </div>
         </div>
-            
-        </>
     );
 }
