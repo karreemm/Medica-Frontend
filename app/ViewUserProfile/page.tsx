@@ -7,8 +7,17 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 export default function Page() {
-  const user = localStorage.getItem("User") as string;
-  const userObj = JSON.parse(user);
+
+  const [userObj, setUserObj] = useState<any>(null);
+
+  useEffect(() => {
+    const user = localStorage.getItem("User") as string;
+    const userObj = JSON.parse(user);
+    if (userObj) {
+      setUserObj(userObj);
+    }
+  }, []);
+  
   const router = useRouter();
   const [uid, setUid] = useState<string | null>(null);
   const [role, setRole] = useState<string | null>(null);

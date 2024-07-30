@@ -24,14 +24,17 @@ function UserInfo (){
     const [certification, setCertification] = useState('');
     const [privateclinical, setPrivateClinical] = useState('');
 
-    const user = localStorage.getItem("User") as string;
-    const userObj = JSON.parse(user);
+    const [userObj, setUserObj] = useState<any>(null);
 
     useEffect(() => {
-        if (userObj) {
+        const user = localStorage.getItem("User") as string;
+        if (user){
+            const userObj = JSON.parse(user);
+            setUserObj(userObj);
             setRole(userObj.role);
         }
-    }, [userObj]);
+    }, []);
+
 
     useEffect(() => {
         GetPatientHistory(userObj.uid)

@@ -3,11 +3,18 @@ import ActivityElement from "./ActivityElement";
 import { AllActivities } from "./handelActivity";
 
 function Activity() {
-    const user = localStorage.getItem("User") as string;
-    const userObj = JSON.parse(user);
+    const [userObj, setUserObj] = useState<any>(null);
+    const [id, setId] = useState<number>(0);
+    useEffect(() => {
+        const user = localStorage.getItem("User") as string;
+        const userObj = JSON.parse(user);
+        setUserObj(userObj);
+        setId(userObj.uid);
+    }, []);
+    
     const [activityElements, setActivityElements] = useState<ReactElement<any, any>[]>([]);
     useEffect(() => {
-        const uid: number = userObj.uid;
+        const uid: number = id;
         AllActivities(uid).then((activities: any) => {
             if (Array.isArray(activities)) {
                 setActivityElements(activities.map((act: any) => (
