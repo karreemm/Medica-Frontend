@@ -7,23 +7,38 @@ import UserInfo from "./UserInfo";
 import Footer from "../Components/Footer";
 
 export default function Page() {
-  const [userObj, setUserObj] = useState(null);
-  const [role, setRole] = useState('');
+
+  const [user, setUser] = useState<string | null>(null);
+  const [userObj, setUserObj] = useState<any>(null);
+  const [role, setRole] = useState<string>('');
 
   useEffect(() => {
-    const user = localStorage.getItem("User");
-    if (user) {
-      const parsedUser = JSON.parse(user);
-      setUserObj(parsedUser);
-      if (!parsedUser || parsedUser.role !== 'admin') {
-        window.location.href = '/LoginPage';
-      } else {
-        setRole(parsedUser.role);
-      }
-    } else {
-      window.location.href = '/LoginPage';
+    const user2 = localStorage.getItem("User");
+    setUser(user2);
+    if (user2) {
+      const userObj2 = JSON.parse(user2);
+      console.log("userObj from page", userObj2);
+      setUserObj(userObj2);
     }
   }, []);
+
+  useEffect(() => {
+    console.log("userObj from state of page", userObj);
+    console.log("user from page", user);
+  }, [userObj]);
+
+  useEffect(() => {
+    if (user === null) {
+      // Do nothing if user is not set yet
+      return;
+    }
+
+    if (userObj === null) {
+      window.location.href = '/LoginPage';
+    } else {
+      setRole(userObj.role);
+    }
+  }, [user, userObj]);
 
 
   return (
