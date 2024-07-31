@@ -26,8 +26,20 @@ function UserInfo (){
     const [privateclinical, setPrivateClinical] = useState('');
     
     
-    const user = localStorage.getItem("User") as string;
-    const userObj = JSON.parse(user);
+    const [userObj, setUserObj] = useState<any>("");
+
+    useEffect(() => {
+        const user = localStorage.getItem("User");
+        if (user) {
+        const userObj2 = JSON.parse(user);
+        console.log("userObj from userinfo", userObj2);
+        setUserObj(userObj2);
+        }
+    }, []);
+
+    useEffect(() => {
+        console.log("userObj from state of userinfo", userObj);
+    }, [userObj]);
 
     useEffect(() => {
         if (userObj) {
