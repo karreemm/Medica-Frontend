@@ -252,7 +252,7 @@ const NavbarUser = () => {
                                     <FontAwesomeIcon icon={faPenToSquare} className="mr-2 text-xl " />
                                     Edit
                                 </span>
-                            </Link>
+                        </Link>
                         </li>
                         <Logout2 />
 
@@ -262,38 +262,72 @@ const NavbarUser = () => {
                         {/* Admin Only */}
                         {role === 'admin' && (
                           <li className="p-4 border-b rounded-xl cursor-pointer border-gray-600 hover:bg-[#f2d7bc] hover:text-black flex items-center text-white">
-                            <button onClick={logout} className="">
-                              <span>
-                                <FontAwesomeIcon icon={faChartLine} className="mr-2 text-xl" />
-                                Dashboard
-                              </span>
-                            </button>
+                            <Link href="/AdminDashboard" className=" ">
+                                <span>
+                                    <FontAwesomeIcon icon={faChartLine} className="mr-2 text-xl " />
+                                    Dashboard
+                                </span>
+                            </Link>
                           </li>
                         )}
 
-                        {/* Doctor & Nurse Only */}
-                        {(role === 'doctor' || role === 'nurse') && (
+                        {/* Doctor Only */}
+                        {role === 'doctor' ? ( 
+                        summary && specialization && education && certification && privateclinical ? (
                           <li className="p-4 border-b rounded-xl cursor-pointer border-gray-600 hover:bg-[#f2d7bc] hover:text-black flex items-center text-white">
-                            <button onClick={logout} className="">
+                          <Link href="/DoctorDashboard" className=" ">
                               <span>
-                                <FontAwesomeIcon icon={faBriefcase} className="mr-2 text-xl" />
-                                Workspace
+                                  <FontAwesomeIcon icon={faBriefcase} className="mr-2 text-xl " />
+                                  Workspace
                               </span>
-                            </button>
+                          </Link>
+                        </li>
+                      ) : (
+                        <Link
+                          href="/EditprofilePage"
+                          className="p-4 border-b rounded-xl cursor-pointer border-gray-600 hover:bg-[#f2d7bc] hover:text-black flex items-center text-white"
+                          onClick={() => alert('Please complete your profile.')}
+                        >
+                          <FontAwesomeIcon icon={faBriefcase} className="mr-2 text-xl" />
+                          Workspace
+                        </Link>
+                      )
+                     ) : null} 
+
+                        {/* Nurse Only */}
+                        {role === 'nurse' && (
+                          <li className="p-4 border-b rounded-xl cursor-pointer border-gray-600 hover:bg-[#f2d7bc] hover:text-black flex items-center text-white">
+                            <Link href="/NurseDashboard" className=" ">
+                                <span>
+                                    <FontAwesomeIcon icon={faBriefcase} className="mr-2 text-xl " />
+                                    Workspace
+                                </span>
+                            </Link>
                           </li>
                         )}
 
                         {/* Patient Only */}
-                        {role === 'patient' && (
+                        {role === 'patient' ? (
+                         weight && height && smoking ? (
                           <li className="p-4 border-b rounded-xl cursor-pointer border-gray-600 hover:bg-[#f2d7bc] hover:text-black flex items-center text-white">
-                            <button onClick={logout} className="">
+                          <Link href="/PatientDashboard" className=" ">
                               <span>
-                                <FontAwesomeIcon icon={faHandHoldingMedical} className="mr-2 text-xl" />
-                                Services
+                                  <FontAwesomeIcon icon={faHandHoldingMedical} className="mr-2 text-xl " />
+                                  Services
                               </span>
-                            </button>
-                          </li>
-                        )}
+                          </Link>
+                        </li>
+                      ) : (
+                        <Link
+                          href="/EditprofilePage"
+                          className="p-4 border-b rounded-xl cursor-pointer border-gray-600 hover:bg-[#f2d7bc] hover:text-black flex items-center text-white"
+                          onClick={() => alert('Please complete your profile.')}
+                        >
+                          <FontAwesomeIcon icon={faHandHoldingMedical} className="mr-2 text-xl" />
+                          Services
+                        </Link>
+                      )
+                    ) : null}
         </ul>
     </div>
   );
