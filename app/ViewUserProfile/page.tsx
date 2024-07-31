@@ -8,7 +8,21 @@ import { useRouter } from "next/navigation";
 
 export default function Page() {
 
-  const [userObj, setUserObj] = useState(JSON.parse(localStorage.getItem('User') as string));
+  const [userObj, setUserObj] = useState<any>("");
+
+  useEffect(() => {
+    const user = localStorage.getItem("User");
+    if (user) {
+      const userObj2 = JSON.parse(user);
+      console.log("userObj from edit", userObj2);
+      setUserObj(userObj2);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("userObj from state", userObj);
+  }, [userObj]);
+  
   
   const router = useRouter();
   const [uid, setUid] = useState<string | null>(null);

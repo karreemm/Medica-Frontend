@@ -7,7 +7,7 @@ import Footer from "../Components/Footer";
 
 export default function Page() {
   const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
-
+  
   useEffect(() => {
     const user = localStorage.getItem("User");
     if (user) {

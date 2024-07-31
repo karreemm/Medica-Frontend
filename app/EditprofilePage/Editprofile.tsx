@@ -21,7 +21,21 @@ import HandleDoctorCV from "./Handling/HandleDoctorCV";
 
 export default function Editprofile() {
 
-    const [userObj, setUserObj] = useState(JSON.parse(localStorage.getItem('User') as string));
+    const [userObj, setUserObj] = useState<any>("");
+
+  useEffect(() => {
+    const user = localStorage.getItem("User");
+    if (user) {
+      const userObj2 = JSON.parse(user);
+      console.log("userObj from edit", userObj2);
+      setUserObj(userObj2);
+    }
+  }, []);
+
+  useEffect(() => {
+    console.log("userObj from state", userObj);
+  }, [userObj]);
+
 
     // User Data
     const [role, setRole] = useState(userObj.role);
@@ -74,22 +88,44 @@ export default function Editprofile() {
         'Cancer',
       ];
 
-    const [firstname, setFirst_name] = useState(userObj.firstname);
-    const [lastname, setLast_name] = useState(userObj.lastname);
-    const [email, setEmail] = useState( userObj.email);
-    const [phone, setPhone] = useState( userObj.phone);
-    const [password, setPassword] = useState( userObj.password);
-    const [confirmpassword, setConfirmPassword] = useState( userObj.password);
-    const [address, setAddress] = useState( userObj.address);
-    const [image, setImage] = useState(userObj.profileimage);
-    const [submitAttempted, setSubmitAttempted] = useState(false);
-    const [github, setGithub] = useState(userObj.github);
-    const [facebook, setFacebook] = useState(userObj.facebook);
-    const [instagram, setInstagram] = useState( userObj.insta);
-    const [linkedin, setLinkedin] = useState(userObj.linkedin);
-    const [twitter, setTwitter] = useState(userObj.twitter);
-    const [gender, setGender] = useState(userObj.gender);
-    const [birthdate, setBirthdate] = useState(userObj.bdate)
+      const [firstname, setFirst_name] = useState("");
+      const [lastname, setLast_name] = useState("");
+      const [email, setEmail] = useState("");
+      const [phone, setPhone] = useState("");
+      const [password, setPassword] = useState("");
+      const [confirmpassword, setConfirmPassword] = useState("");
+      const [address, setAddress] = useState("");
+      const [image, setImage] = useState("");
+      const [submitAttempted, setSubmitAttempted] = useState(false);
+      const [github, setGithub] = useState("");
+      const [facebook, setFacebook] = useState("");
+      const [instagram, setInstagram] = useState("");
+      const [linkedin, setLinkedin] = useState("");
+      const [twitter, setTwitter] = useState("");
+      const [gender, setGender] = useState("");
+      const [birthdate, setBirthdate] = useState("");
+
+      useEffect(() => {
+        if (userObj) {
+          setFirst_name(userObj.firstname || "");
+          setLast_name(userObj.lastname || "");
+          setEmail(userObj.email || "");
+          setPhone(userObj.phone || "");
+          setPassword(userObj.password || "");
+          setConfirmPassword(userObj.password || "");
+          setAddress(userObj.address || "");
+          setImage(userObj.profileimage || "");
+          setGithub(userObj.github || "");
+          setFacebook(userObj.facebook || "");
+          setInstagram(userObj.insta || "");
+          setLinkedin(userObj.linkedin || "");
+          setTwitter(userObj.twitter || "");
+          setGender(userObj.gender || "");
+          setBirthdate(userObj.bdate || "");
+        }
+      }, [userObj]);
+
+    console.log(firstname, lastname, email, birthdate, phone,address, image, github, facebook, instagram, linkedin)
 
     const [weight, setWeight] = useState(0.0);
     const [height, setHeight] = useState(0.0);

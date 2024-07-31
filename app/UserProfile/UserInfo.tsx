@@ -19,7 +19,6 @@ function UserInfo (){
     const [selectedDiseases, setSelectedDiseases] = useState<string[]>([]);
     const [role, setRole] = useState('');
 
-
     const [summary, setSummary] = useState('');
     const [education, setEducation] = useState('');
     const [specialization, setSpecialization] = useState('');
