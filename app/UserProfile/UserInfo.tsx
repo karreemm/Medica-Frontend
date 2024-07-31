@@ -18,6 +18,7 @@ function UserInfo (){
     const [smoking, setSmoking] = useState(false);
     const [selectedDiseases, setSelectedDiseases] = useState<string[]>([]);
     const [role, setRole] = useState('');
+    const [id, setId] = useState('');
 
     const [summary, setSummary] = useState('');
     const [education, setEducation] = useState('');
@@ -44,11 +45,15 @@ function UserInfo (){
     useEffect(() => {
         if (userObj) {
             setRole(userObj.role);
+            setId(userObj.uid);
         }
     }, [userObj]);
 
+    console.log("Role from UserInfo:", role);
+    console.log("ID from UserInfo:", id);
+
     useEffect(() => {
-        GetPatientHistory(userObj.uid)
+        GetPatientHistory(id)
         .then(data => {
           try {
             console.log("Patient History Data from Navbar", data);
@@ -64,7 +69,7 @@ function UserInfo (){
         .catch(error => {
           console.log("Error in fetching Patient History Data:", error);
         });
-        }, []);
+        }, [id]);
 
         const GetSelectedDiseases = (diseases: Array<string>) => {
             if (diseases.length === 0) return "None";
@@ -74,7 +79,7 @@ function UserInfo (){
         console.log("Diseases:", diseases);
 
         useEffect(() => {
-            GetDoctorCV(userObj.uid)
+            GetDoctorCV(id)
             .then(data => {
                 try{
                     console.log("Doctor CV Data", data);
@@ -98,7 +103,8 @@ function UserInfo (){
             personalInfo.style.opacity = "0";
             profileImage.style.opacity = "100";
             infoBox.style.height = "5rem";
-            },[]);
+            },[id]);
+            
     const handelDropDown = () => {
         const personalInfo = document.querySelector(".personal-info-title") as HTMLElement;
         const personalInfoContent = document.querySelector(".personal-info-content") as HTMLElement;
@@ -295,6 +301,8 @@ return (
                 <p className=" text-[#fdf0d5] mt-2">{privateclinical}</p>
                 </div>
                 </>)}
+
+                
                 {/* links */}
 
          <div className={`my-8 flex flex-row content-end justify-center gap-x-3 

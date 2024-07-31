@@ -22,24 +22,61 @@ import HandleDoctorCV from "./Handling/HandleDoctorCV";
 export default function Editprofile() {
 
     const [userObj, setUserObj] = useState<any>("");
-
-  useEffect(() => {
-    const user = localStorage.getItem("User");
-    if (user) {
-      const userObj2 = JSON.parse(user);
-      console.log("userObj from edit", userObj2);
-      setUserObj(userObj2);
-    }
-  }, []);
-
-  useEffect(() => {
-    console.log("userObj from state", userObj);
-  }, [userObj]);
-
-
-    // User Data
     const [role, setRole] = useState(userObj.role);
     const [id, setId] = useState(userObj.uid);
+
+    const [weight, setWeight] = useState(0.0);
+    const [height, setHeight] = useState(0.0);
+    const [smoking, setSmoking] = useState(false);
+    const [selectedDiseases, setSelectedDiseases] = useState<string[]>([]);
+
+    const [summary, setSummary] = useState('');
+    const [education, setEducation] = useState('');
+    const [specialization, setSpecialization] = useState('');
+    const [certification, setCertification] = useState('');
+    const [privateclinical, setPrivateClinical] = useState('');
+
+    const [firstname, setFirst_name] = useState("");
+    const [lastname, setLast_name] = useState("");
+    const [email, setEmail] = useState("");
+    const [phone, setPhone] = useState("");
+    const [password, setPassword] = useState("");
+    const [confirmpassword, setConfirmPassword] = useState("");
+    const [address, setAddress] = useState("");
+    const [image, setImage] = useState("");
+    const [submitAttempted, setSubmitAttempted] = useState(false);
+    const [github, setGithub] = useState("");
+    const [facebook, setFacebook] = useState("");
+    const [instagram, setInstagram] = useState("");
+    const [linkedin, setLinkedin] = useState("");
+    const [twitter, setTwitter] = useState("");
+    const [gender, setGender] = useState("");
+    const [birthdate, setBirthdate] = useState("");
+
+
+    const [errorMessage, setErrorMessage] = useState('');
+    const router = useRouter();
+
+    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
+
+
+    useEffect(() => {
+        const user = localStorage.getItem("User");
+        if (user) {
+        const userObj2 = JSON.parse(user);
+        console.log("userObj from edit", userObj2);
+        setUserObj(userObj2);
+        }
+    }, []);
+
+    useEffect(() => {
+        console.log("userObj from state", userObj);
+        if (userObj) {
+          setRole(userObj.role);
+          setId(userObj.uid);
+        }
+    }, [userObj]);
 
     console.log("user,", id);
 
@@ -88,23 +125,6 @@ export default function Editprofile() {
         'Cancer',
       ];
 
-      const [firstname, setFirst_name] = useState("");
-      const [lastname, setLast_name] = useState("");
-      const [email, setEmail] = useState("");
-      const [phone, setPhone] = useState("");
-      const [password, setPassword] = useState("");
-      const [confirmpassword, setConfirmPassword] = useState("");
-      const [address, setAddress] = useState("");
-      const [image, setImage] = useState("");
-      const [submitAttempted, setSubmitAttempted] = useState(false);
-      const [github, setGithub] = useState("");
-      const [facebook, setFacebook] = useState("");
-      const [instagram, setInstagram] = useState("");
-      const [linkedin, setLinkedin] = useState("");
-      const [twitter, setTwitter] = useState("");
-      const [gender, setGender] = useState("");
-      const [birthdate, setBirthdate] = useState("");
-
       useEffect(() => {
         if (userObj) {
           setFirst_name(userObj.firstname || "");
@@ -125,26 +145,8 @@ export default function Editprofile() {
         }
       }, [userObj]);
 
-    console.log(firstname, lastname, email, birthdate, phone,address, image, github, facebook, instagram, linkedin)
 
-    const [weight, setWeight] = useState(0.0);
-    const [height, setHeight] = useState(0.0);
-    const [smoking, setSmoking] = useState(false);
-    const [selectedDiseases, setSelectedDiseases] = useState<string[]>([]);
-
-    const [summary, setSummary] = useState('');
-    const [education, setEducation] = useState('');
-    const [specialization, setSpecialization] = useState('');
-    const [certification, setCertification] = useState('');
-    const [privateclinical, setPrivateClinical] = useState('');
-
-
-    const [errorMessage, setErrorMessage] = useState('');
-    const router = useRouter();
-
-    const [isPasswordVisible, setIsPasswordVisible] = useState(false);
-    const [isConfirmPasswordVisible, setIsConfirmPasswordVisible] = useState(false);
-
+    
 
     const handleDiseaseChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const value = event.target.value;

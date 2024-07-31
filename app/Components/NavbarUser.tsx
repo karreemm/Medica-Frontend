@@ -66,7 +66,7 @@ const NavbarUser = () => {
   .catch(error => {
     console.log("Error in fetching Patient History Data:", error);
   });
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     GetDoctorCV(id)
@@ -85,7 +85,7 @@ const NavbarUser = () => {
     .catch(error => {
         console.log("Error in fetching Doctor CV Data:", error);
     })
-    },[]);
+    },[id]);
 
   // Toggle function to handle the navbar's display
   const handleNav = () => {
