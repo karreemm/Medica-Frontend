@@ -6,17 +6,28 @@ import { useEffect, useState } from 'react';
 import GetAllScans from './getAllScans';
 function Scans() {
 
-    const [userObj, setUserObj] = useState<any>(null);
+    const [userObj, setUserObj] = useState<any>("");
+    const [id, setId] = useState<any>("");
+
     useEffect(() => {
-        const user = localStorage.getItem("User") || "";
-        const userObj = JSON.parse(user);
-        if (userObj) {
-            setUserObj(userObj);
+        const user = localStorage.getItem("User");
+        if (user) {
+        const userObj2 = JSON.parse(user);
+        console.log("userObj from appointments", userObj2);
+        setUserObj(userObj2);
         }
     }, []);
+
+    useEffect(() => {
+        console.log("userObj from state of appointments", userObj);
+        setId(userObj.uid);
+    }, [userObj]);
+
+    console.log("id from scans", id);
+
     const [requestElements, setRequestElements] = useState();
     useEffect(() => {
-        GetAllScans(userObj.uid)
+        GetAllScans(id)
         .then(async res => {
             if(res.status === 200){
                 console.log("Scans fetched successfully");
@@ -38,7 +49,7 @@ function Scans() {
                 console.log("Scans not fetched");
             }
         })
-    }, []);
+    }, [id]);
 
     return (
         <>

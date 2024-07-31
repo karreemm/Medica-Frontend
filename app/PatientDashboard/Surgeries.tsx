@@ -8,17 +8,28 @@ import GetAllSurgeries from './AllSurgeries';
 import Surgery from './Surgery';
 export function Surgeries() {
 
-    const [userObj, setUserObj] = useState<any>(null);
+    const [userObj, setUserObj] = useState<any>("");
+    const [id, setId] = useState<any>("");
+
     useEffect(() => {
-        const user = localStorage.getItem("User") || "";
-        const userObj = JSON.parse(user);
-        if (userObj) {
-            setUserObj(userObj);
+        const user = localStorage.getItem("User");
+        if (user) {
+        const userObj2 = JSON.parse(user);
+        console.log("userObj from appointments", userObj2);
+        setUserObj(userObj2);
         }
     }, []);
+
+    useEffect(() => {
+        console.log("userObj from state of appointments", userObj);
+        setId(userObj.uid);
+    }, [userObj]);
+
+    console.log("id from surgeries", id);
+
     const [requestElements, setRequestElements] = useState<JSX.Element[]>([]);
     useEffect(() => {
-        GetAllSurgeries(userObj.uid)    
+        GetAllSurgeries(id)    
     .then(async res => {
         if(res.status === 200){
             const ap = await res.json();
@@ -41,7 +52,7 @@ export function Surgeries() {
 
         }
     })
-    }, []);
+    }, [id]);
     
     
         // <Surgery
