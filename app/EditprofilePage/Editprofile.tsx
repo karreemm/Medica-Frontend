@@ -21,8 +21,7 @@ import HandleDoctorCV from "./Handling/HandleDoctorCV";
 
 export default function Editprofile() {
 
-    const user = localStorage.getItem("User") as string;
-    const userObj = JSON.parse(user);
+    const [userObj, setUserObj] = useState(JSON.parse(localStorage.getItem('User') as string));
 
     // User Data
     const [role, setRole] = useState(userObj.role);

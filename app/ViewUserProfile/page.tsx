@@ -8,8 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function Page() {
 
-  const user = localStorage.getItem("User") as string;
-  const userObj = JSON.parse(user);
+  const [userObj, setUserObj] = useState(JSON.parse(localStorage.getItem('User') as string));
   
   const router = useRouter();
   const [uid, setUid] = useState<string | null>(null);

@@ -25,9 +25,6 @@ export default function Page() {
     }
   }, []);
 
-  if (!userObj) {
-    return null; // Render nothing or a loading spinner while user data is being fetched
-  }
 
   return (
     <>

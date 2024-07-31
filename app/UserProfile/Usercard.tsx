@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCalendar, faPerson } from '@fortawesome/free-solid-svg-icons';
 import '../Components/Components.css';
+
 export default function UserCard() {
 
     const [userObj, setUserObj] = useState<any>(null);
