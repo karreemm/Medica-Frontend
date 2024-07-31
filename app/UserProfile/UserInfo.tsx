@@ -24,10 +24,13 @@ function UserInfo (){
     const [specialization, setSpecialization] = useState('');
     const [certification, setCertification] = useState('');
     const [privateclinical, setPrivateClinical] = useState('');
+    const [diseases, setDiseases] = useState('');
     
     
     const user = localStorage.getItem("User") as string;
     const userObj = JSON.parse(user);
+    console.log("User Object from Navbar", userObj);
+    console.log("User id from Navbar", userObj.uid);
 
     useEffect(() => {
         if (userObj) {
@@ -35,6 +38,7 @@ function UserInfo (){
         }
     }, [userObj]);
 
+    if (userObj.role === "patient") {
     useEffect(() => {
         GetPatientHistory(userObj.uid)
         .then(data => {
@@ -53,14 +57,16 @@ function UserInfo (){
           console.log("Error in fetching Patient History Data:", error);
         });
         }, []);
-
+    
         const GetSelectedDiseases = (diseases: Array<string>) => {
             if (diseases.length === 0) return "None";
             return diseases.join(", ");
           };
-        const diseases = GetSelectedDiseases(selectedDiseases);
+          setDiseases  (GetSelectedDiseases(selectedDiseases));
         console.log("Diseases:", diseases);
+        }
 
+        if (userObj.role === "doctor"){
         useEffect(() => {
             GetDoctorCV(userObj.uid)
             .then(data => {
@@ -87,6 +93,8 @@ function UserInfo (){
             profileImage.style.opacity = "100";
             infoBox.style.height = "5rem";
             },[]);
+        }
+
     const handelDropDown = () => {
         const personalInfo = document.querySelector(".personal-info-title") as HTMLElement;
         const personalInfoContent = document.querySelector(".personal-info-content") as HTMLElement;

@@ -1,16 +1,24 @@
-import React, { useEffect } from 'react';
+"use client";
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-export default function Logout() {
-  useEffect(() => {
-    // Ensure code runs only on the client side
-    if (typeof window !== "undefined") {
-      localStorage.removeItem('token');
-      localStorage.removeItem('User');
+const Logout = () => {
 
-      window.location.href = '/';
-    }
-  }, []); // Empty dependency array ensures this effect runs only once on mount
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    localStorage.removeItem('User');
+    window.location.href = '/';
+  };
 
-  // Render nothing
-  return null;
-}
+  return (
+    <button 
+      onClick={handleLogout}
+      className="block w-full text-left px-4 py-2 text-black hover:bg-[#f2d7bc]"
+    >
+      <FontAwesomeIcon icon={faRightFromBracket} className="mr-2 text-xl" />
+      Log Out
+    </button>
+  );
+};
+
+export default Logout;

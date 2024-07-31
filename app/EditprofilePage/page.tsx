@@ -6,36 +6,28 @@ import Navbar from "../Components/Navbar";
 import Footer from "../Components/Footer";
 
 export default function Page() {
-  const [userObj, setUserObj] = useState<any>(null);
-  const [NavbarComponent, setNavbarComponent] = useState(() => Navbar);
+  const [isUserLoggedIn, setIsUserLoggedIn] = useState(false);
 
   useEffect(() => {
-    // Ensure code runs only on the client side
-    if (typeof window !== "undefined") {
-      const user = localStorage.getItem("User");
-      if (user) {
-        const parsedUser = JSON.parse(user);
-        setUserObj(parsedUser);
-        if (parsedUser) {
-          setNavbarComponent(NavbarUser);
-        } else {
-          setNavbarComponent(Navbar);
-        }
+    const user = localStorage.getItem("User");
+    if (user) {
+      const userObj = JSON.parse(user);
+      if (userObj) {
+        setIsUserLoggedIn(true);
       } else {
+        setIsUserLoggedIn(false);
         window.location.href = '/LoginPage';
       }
+    } else {
+      setIsUserLoggedIn(false);
+      window.location.href = '/LoginPage';
     }
   }, []);
-
-  // Render nothing while waiting for userObj to be set
-  if (userObj === null) {
-    return null;
-  }
 
   return (
     <>
       <div>
-        <NavbarComponent />
+        {isUserLoggedIn ? <NavbarUser /> : <Navbar />}
       </div>
       <div className="p-8 flex justify-start bg-[#669bbc] min-h-screen mt-8">
         <Editprofile />

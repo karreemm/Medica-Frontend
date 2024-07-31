@@ -3,13 +3,15 @@ import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { AiOutlineClose, AiOutlineMenu } from 'react-icons/ai';
 import { faHouse, faCircleInfo, faHandshake, faChartLine, faBriefcase, faHandHoldingMedical, faStethoscope } from '@fortawesome/free-solid-svg-icons';
-import { faUser, faPenToSquare, faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import './Components.css';
 import Link from 'next/link';
 import logout from './Logout';
+import Logout2 from './Logout2';
 import GetPatientHistory from '../EditprofilePage/Handling/GetPatientHistory';
 import GetDoctorCV from '../EditprofilePage/Handling/GetDoctorCV';
+import Logout from './Logout';
 
 const NavbarUser = () => {
 
@@ -26,6 +28,10 @@ const NavbarUser = () => {
   const [role, setRole] = useState('');
   const [id, setId] = useState('');
   const [userObj, setUserObj] = useState<any | null>(null);
+
+  // State to manage the navbar's visibility
+  const [nav, setNav] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
     useEffect(() => {
         // Check if we are in a browser environment
@@ -60,7 +66,7 @@ const NavbarUser = () => {
   .catch(error => {
     console.log("Error in fetching Patient History Data:", error);
   });
-  }, [id]);
+  }, []);
 
   useEffect(() => {
     GetDoctorCV(id)
@@ -80,11 +86,6 @@ const NavbarUser = () => {
         console.log("Error in fetching Doctor CV Data:", error);
     })
     },[]);
-
-  // State to manage the navbar's visibility
-  const [nav, setNav] = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
 
   // Toggle function to handle the navbar's display
   const handleNav = () => {
@@ -140,13 +141,7 @@ const NavbarUser = () => {
                         <FontAwesomeIcon icon={faPenToSquare} className="mr-2 text-xl" />
                         Edit
                     </Link>
-                    <button 
-                        onClick={logout}
-                        className="block w-full text-left px-4 py-2 text-black hover:bg-[#f2d7bc]"
-                    >
-                        <FontAwesomeIcon icon={faRightFromBracket} className="mr-2 text-xl" />
-                        Log Out
-                    </button>
+                    <Logout />
 
                     {/* Additional settings */}
                     <hr className='border-b-2'/>
@@ -259,14 +254,7 @@ const NavbarUser = () => {
                                 </span>
                             </Link>
                         </li>
-                        <li className="p-4 border-b rounded-xl cursor-pointer border-gray-600 hover:bg-[#f2d7bc] hover:text-black flex items-center text-white ">
-                        <button onClick={logout} className=" ">
-                                <span>
-                                    <FontAwesomeIcon icon={faRightFromBracket} className="mr-2 text-xl " />
-                                    Log Out
-                                </span>
-                            </button>
-                        </li>
+                        <Logout2 />
 
                         {/* Additional settings */}
                         <div className="mt-4"></div>

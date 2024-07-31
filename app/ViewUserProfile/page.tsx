@@ -8,15 +8,8 @@ import { useRouter } from "next/navigation";
 
 export default function Page() {
 
-  const [userObj, setUserObj] = useState<any>(null);
-
-  useEffect(() => {
-    const user = localStorage.getItem("User") as string;
-    const userObj = JSON.parse(user);
-    if (userObj) {
-      setUserObj(userObj);
-    }
-  }, []);
+  const user = localStorage.getItem("User") as string;
+  const userObj = JSON.parse(user);
   
   const router = useRouter();
   const [uid, setUid] = useState<string | null>(null);
@@ -25,7 +18,7 @@ export default function Page() {
   useEffect(() => {
     const fetchUid = async () => {
       if (!userObj) {
-        router.push("/LoginPage"); 
+        router.push("/"); 
       } else {
         const queryParams = new URLSearchParams(window.location.search);
         const uidFromQuery = queryParams.get("uid");

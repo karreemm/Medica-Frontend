@@ -21,26 +21,12 @@ import HandleDoctorCV from "./Handling/HandleDoctorCV";
 
 export default function Editprofile() {
 
+    const user = localStorage.getItem("User") as string;
+    const userObj = JSON.parse(user);
+
     // User Data
-    const [role, setRole] = useState('');
-    const [id, setId] = useState('');
-    const [userObj, setUserObj] = useState<any | null>(null);
-
-    useEffect(() => {
-        // Check if we are in a browser environment
-        if (typeof window !== "undefined") {
-            const user = localStorage.getItem("User");
-            if (user) {
-                const parsedUser = JSON.parse(user);
-                setUserObj(parsedUser);
-
-                if (parsedUser) {
-                    setRole(parsedUser.role);
-                    setId(parsedUser.uid);
-                  }
-            }
-        }
-    }, []);
+    const [role, setRole] = useState(userObj.role);
+    const [id, setId] = useState(userObj.uid);
 
     console.log("user,", id);
 
