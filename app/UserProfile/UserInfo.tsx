@@ -38,7 +38,6 @@ function UserInfo (){
         }
     }, [userObj]);
 
-    if (userObj.role === "patient") {
     useEffect(() => {
         GetPatientHistory(userObj.uid)
         .then(data => {
@@ -64,9 +63,8 @@ function UserInfo (){
           };
           setDiseases  (GetSelectedDiseases(selectedDiseases));
         console.log("Diseases:", diseases);
-        }
+        
 
-        if (userObj.role === "doctor"){
         useEffect(() => {
             GetDoctorCV(userObj.uid)
             .then(data => {
@@ -93,7 +91,7 @@ function UserInfo (){
             profileImage.style.opacity = "100";
             infoBox.style.height = "5rem";
             },[]);
-        }
+        
 
     const handelDropDown = () => {
         const personalInfo = document.querySelector(".personal-info-title") as HTMLElement;
