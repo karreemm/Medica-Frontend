@@ -31,7 +31,6 @@ export default function Page() {
   useEffect(() => {
     const fetchUid = async () => {
       if (!userObj) {
-        router.push("/"); 
       } else {
         const queryParams = new URLSearchParams(window.location.search);
         const uidFromQuery = queryParams.get("uid");
