@@ -95,7 +95,7 @@ export default function Editprofile() {
   .catch(error => {
     console.log("Error in fetching Patient History Data:", error);
   });
-}, []);
+}, [id]);
 
     useEffect(() => {
     GetDoctorCV(id)
@@ -114,7 +114,7 @@ export default function Editprofile() {
     .catch(error => {
         console.log("Error in fetching Doctor CV Data:", error);
     })
-    },[]);
+    },[id]);
  
 
     const diseasesList = [

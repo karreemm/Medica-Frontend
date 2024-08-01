@@ -95,6 +95,9 @@ function UserInfo (){
             .catch(error => {
                 console.log("Error in fetching Doctor CV Data:", error);
             })
+            },[id]);
+
+        useEffect(() => {
             const personalInfo = document.querySelector(".personal-info-title") as HTMLElement;
             const personalInfoContent = document.querySelector(".personal-info-content") as HTMLElement;
             const profileImage = document.querySelector(".profile-image") as HTMLElement;
@@ -103,7 +106,7 @@ function UserInfo (){
             personalInfo.style.opacity = "0";
             profileImage.style.opacity = "100";
             infoBox.style.height = "5rem";
-            },[id]);
+        }, []);
             
     const handelDropDown = () => {
         const personalInfo = document.querySelector(".personal-info-title") as HTMLElement;
