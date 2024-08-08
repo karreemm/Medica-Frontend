@@ -11,14 +11,24 @@ import GetNurses from './GetNurses';
 import AddNursesToSurgery from './AddNursesToSurgery';
 import { handelStatus } from './UpdateStatus';
 export function AddSurgery(req: {apid:number, id: number , name:string , image : string ,date : string}){
-    const [userObj, setUserObj] = useState<any>(null);
-    useEffect(() => {
-        const user = localStorage.getItem("User") || "";
-        const userObj = JSON.parse(user);
-        if (userObj) {
-            setUserObj(userObj);
-        }
-    }, []);
+  const [userObj, setUserObj] = useState<any>("");
+  const [id, setId] = useState<any>("");
+
+  useEffect(() => {
+      const user = localStorage.getItem("User");
+      if (user) {
+      const userObj2 = JSON.parse(user);
+      console.log("userObj from appointments", userObj2);
+      setUserObj(userObj2);
+      }
+  }, []);
+
+  useEffect(() => {
+      console.log("userObj from state of appointments", userObj);
+      setId(userObj.uid);
+  }, [userObj]);
+
+  console.log("id from Requests", id);
     const [nurses, setNurses] = useState();
     const [selectedNurses, setSelectedNurses] = useState<any[]>([]);
     const [sid, setSid] = useState(0);

@@ -7,7 +7,6 @@ import { faUser, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { faGear } from '@fortawesome/free-solid-svg-icons';
 import './Components.css';
 import Link from 'next/link';
-import logout from './Logout';
 import Logout2 from './Logout2';
 import GetPatientHistory from '../EditprofilePage/Handling/GetPatientHistory';
 import GetDoctorCV from '../EditprofilePage/Handling/GetDoctorCV';
@@ -26,28 +25,29 @@ const NavbarUser = () => {
   const [privateclinical, setPrivateClinical] = useState('');
 
   const [role, setRole] = useState('');
-  const [id, setId] = useState('');
-  const [userObj, setUserObj] = useState<any | null>(null);
+  
 
   // State to manage the navbar's visibility
   const [nav, setNav] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-    useEffect(() => {
-        // Check if we are in a browser environment
-        if (typeof window !== "undefined") {
-            const user = localStorage.getItem("User");
-            if (user) {
-                const parsedUser = JSON.parse(user);
-                setUserObj(parsedUser);
+  const [userObj, setUserObj] = useState<any>("");
+  const [id, setId] = useState<any>("");
 
-                if (parsedUser) {
-                    setRole(parsedUser.role);
-                    setId(parsedUser.uid);
-                  }
-            }
-        }
-    }, []);
+  useEffect(() => {
+      const user = localStorage.getItem("User");
+      if (user) {
+      const userObj2 = JSON.parse(user);
+      console.log("userObj from appointments", userObj2);
+      setUserObj(userObj2);
+      }
+  }, []);
+
+  useEffect(() => {
+      console.log("userObj from state of appointments", userObj);
+      setId(userObj.uid);
+      setRole(userObj.role);
+  }, [userObj]);
 
   console.log("id from Navbar:", id);
 

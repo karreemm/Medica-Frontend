@@ -36,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onOptionClick }) => {
         <div className="bg-[#003049] flex flex-col w-full px-2 md:px-4 md:p-6 text-white z-10 space-y-8 rounded-lg  h-16 md:h-[50%]">   
         {/* Logo */}
         <div className="flex items-center ">
-          <h1 className="hidden md:block text-3xl text-[#fdf0d5] pacifico-font">Sidebar</h1>
+          <h1 className="hidden md:block text-3xl text-[#fdf0d5] pacifico-font">Services</h1>
         </div>
   
         {/* Desktop Navigation */}
@@ -58,8 +58,8 @@ const Sidebar: React.FC<SidebarProps> = ({ onOptionClick }) => {
         {/* Mobile Navigation Icon */}
         <div onClick={handleSidebar} className="block md:hidden h-0">
           {sid ? <div></div> :
-           <div className='flex justify-start items-center'>
-          <h1 className="w-full text-2xl font-bold text-[#fdf0d5] pacifico-font flex items-center">Sidebar</h1>
+           <div className='flex justify-start items-center h-full'>
+          <h1 className="w-full text-2xl font-bold text-[#fdf0d5] pacifico-font flex items-center">Services</h1>
           <AiOutlineMenu size={30} />
           </div>  }
         </div>
@@ -75,7 +75,7 @@ const Sidebar: React.FC<SidebarProps> = ({ onOptionClick }) => {
           
         {/* Mobile Logo */}
           <div className='flex items-center m-4'>
-            <h1 className="w-full text-2xl font-bold text-[#fdf0d5] pacifico-font">Sidebar</h1>
+            <h1 className="w-full text-2xl font-bold text-[#fdf0d5] pacifico-font">Services</h1>
             {sid ? <AiOutlineClose size={20} onClick={()=>setSid(false)} /> : <div></div>}
 
           </div>

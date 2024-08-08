@@ -9,24 +9,26 @@ import { Surgeries } from "./Surgeries";
 import Footer from "../Components/Footer";
 
 export default function Page() {
-  const [userObj, setUserObj] = useState<any>(null);
   const [activeComponent, setActiveComponent] = useState<string>('Appointments');
+  const [userObj, setUserObj] = useState<any>("");
+  const [id, setId] = useState<any>("");
 
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      // Safely access localStorage
-      const user = localStorage.getItem("User");
-      if (user) {
-        const parsedUser = JSON.parse(user);
-        setUserObj(parsedUser);
-        if (!parsedUser || parsedUser.role !== "doctor") {
-          window.location.href = "/login";
+    useEffect(() => {
+        const user = localStorage.getItem("User");
+        if (user) {
+        const userObj2 = JSON.parse(user);
+        console.log("userObj from appointments", userObj2);
+        setUserObj(userObj2);
         }
-      } else {
-        window.location.href = "/login";
-      }
-    }
-  }, []);
+    }, []);
+
+    useEffect(() => {
+        console.log("userObj from state of appointments", userObj);
+        setId(userObj.uid);
+    }, [userObj]);
+
+    console.log("id from Requests", id);
+
 
   const handleSidebarOptionClick = (option: string) => {
     setActiveComponent(option);
@@ -47,21 +49,20 @@ export default function Page() {
     }
   };
 
-  // Render nothing while userObj is null
-  if (!userObj) {
-    return null;
-  }
+  
 
   return (
     <>
-      <div className="bg-[#669bbc]">
+      <div className="bg-[#669bbc] min-h-screen">
         <NavbarUser />
-        <div className="flex flex-col items-center md:flex-row md:justify-center md:items-start mx-5 mt-32 md:space-x-10">
+        <div className="flex flex-col items-center md:flex-row md:justify-between md:items-start mx-5 mt-36 md:mt-44 md:space-x-10">
           <div className="flex flex-row items-center md:basis-[12%] w-full">
             <Sidebar onOptionClick={handleSidebarOptionClick} />
           </div>
-          <div className="md:basis-[70%] w-full mt-5 md:mt-0 h-[570px]">
+          <div className="flex justify-center w-full md:basis-[90%]">
+          <div className="md:basis-[60%]  w-[90%] mt-5 md:mt-0 h-[570px]">
             {renderComponent()}
+          </div>
           </div>
         </div>
       </div>
