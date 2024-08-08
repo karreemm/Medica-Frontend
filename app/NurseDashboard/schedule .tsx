@@ -85,7 +85,7 @@ export default function Schedule() {
   };
 
   return (
-    <div className="flex flex-col w-full mt-44">
+    <div className="flex flex-col w-full mt-10 md:mt-44">
       <div className="overflow-x-auto sm:mx-6 lg:mx-8 flex flex-col items-center">
         {/* Table Element */}
         <div className="py-2 align-middle inline-block w-[70%] sm:px-6 lg:px-8">
